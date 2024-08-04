@@ -3,10 +3,8 @@ using UnityEngine;
 
 public class LaneKeydownEvent : MonoBehaviour
 {
-    SpriteRenderer thisLane;
-
+    private SpriteRenderer thisLane;
     private KeyCode laneKey;
-
     private int laneNumber;
 
     private void Start()
