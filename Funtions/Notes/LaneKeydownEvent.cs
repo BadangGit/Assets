@@ -17,6 +17,9 @@ public class LaneKeydownEvent : MonoBehaviour
 
     private string judgement;
 
+    private Text textItem;
+    private Color color;
+
     private Note note = new();
 
     private void Start()
@@ -71,20 +74,29 @@ public class LaneKeydownEvent : MonoBehaviour
 
     private void PressLine(GameObject nearNote)
     {
+
+
         int notePosY = (int)(nearNote.transform.position.y);
         int linePosY = (int)(judgeLine.transform.position.y);
+
         distance = Math.Abs(notePosY - linePosY);
+
+        textItem = GameObject.Find("Text").GetComponent<Text>();
+
         if (distance < 200)
         {
             switch (distance)
             {
                 case < 100:
-                    judgement = "Perfect!"; break;
+                    judgement = "Perfect!";
+                    color = Color.yellow; break;
                 case < 200:
-                    judgement = "Good"; break;
+                    judgement = "Good";
+                    color = Color.blue; break;
             }
             note.Break(nearNote);
-            GameObject.Find("Text").GetComponent<Text>().text = judgement;
+            textItem.text = judgement;
+            textItem.color = color;
         }
     }
 }

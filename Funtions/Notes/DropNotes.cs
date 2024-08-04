@@ -10,6 +10,8 @@ public class DropNotes : MonoBehaviour
     private Vector3 pos;
     private Note note = new();
 
+    private Text textItem;
+
     private void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -23,7 +25,10 @@ public class DropNotes : MonoBehaviour
         if (pos.y < -540)
         {
             note.Break(gameObject);
-            GameObject.Find("Text").GetComponent<Text>().text = "Miss";
+            textItem = GameObject.Find("Text").GetComponent<Text>();
+
+            textItem.text = "Miss";
+            textItem.color = Color.red;
         }
     }
 }
