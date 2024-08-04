@@ -33,16 +33,15 @@ public class SetNotes : MonoBehaviour
     public List<Note> GetThisLaneNote()
     {
         allNotes = GameObject.Find("NoteInfo").gameObject.GetComponent<CreateNoteInfo>().note;
-        laneNum = GetLaneNum();
+        laneNum = int.Parse(GetLaneNumToString(gameObject.name));
 
         return allNotes[laneNum];
     }
 
-    private int GetLaneNum()
+    public string GetLaneNumToString(string laneName)
     {
-        string laneName = gameObject.name;
         string laneNum = Regex.Match(laneName, "\\d+").Value;
 
-        return int.Parse(laneNum);
+        return laneNum;
     }
 }
