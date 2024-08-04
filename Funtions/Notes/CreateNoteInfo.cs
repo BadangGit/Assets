@@ -22,6 +22,11 @@ public class CreateNoteInfo : MonoBehaviour
                 notes.transform.localPosition = position;
             }
         }
+
+        public void Break(GameObject note)
+        {
+            Destroy(note);
+        }
     }
 
     public List<List<Note>> note = new List<List<Note>>();
