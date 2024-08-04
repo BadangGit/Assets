@@ -1,5 +1,8 @@
+using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.UI;
+using static CreateNoteInfo;
 
 public class LaneKeydownEvent : MonoBehaviour
 {
@@ -7,10 +10,20 @@ public class LaneKeydownEvent : MonoBehaviour
     private KeyCode laneKey;
     private int laneNumber;
 
+    private int distance;
+
+    private GameObject nearNote;
+    private GameObject judgeLine;
+
+    private string judgement;
+
+    private Note note = new();
+
     private void Start()
     {
         laneNumber = int.Parse(Regex.Match(gameObject.name, "\\d+").Value);
 
+        judgeLine = GameObject.Find("JudgeLine").gameObject;
         thisLane = gameObject.GetComponent<SpriteRenderer>();
 
         switch (laneNumber)
@@ -28,6 +41,8 @@ public class LaneKeydownEvent : MonoBehaviour
 
     void Update()
     {
+        nearNote = gameObject.transform.GetChild(0).gameObject;
+
         if (Input.GetKey(laneKey))
         {
             WhitenLaneColor();
@@ -36,6 +51,11 @@ public class LaneKeydownEvent : MonoBehaviour
         if (Input.GetKeyUp(laneKey))
         {
             DarkenLaneColor();
+        }
+
+        if (Input.GetKeyDown(laneKey))
+        {
+            PressLine(nearNote);
         }
     }
 
@@ -47,5 +67,24 @@ public class LaneKeydownEvent : MonoBehaviour
     private void DarkenLaneColor()
     {
         thisLane.color = new Color32(255, 255, 255, 0);
+    }
+
+    private void PressLine(GameObject nearNote)
+    {
+        int notePosY = (int)(nearNote.transform.position.y);
+        int linePosY = (int)(judgeLine.transform.position.y);
+        distance = Math.Abs(notePosY - linePosY);
+        if (distance < 200)
+        {
+            switch (distance)
+            {
+                case < 100:
+                    judgement = "Perfect!"; break;
+                case < 200:
+                    judgement = "Good"; break;
+            }
+            note.Break(nearNote);
+            GameObject.Find("Text").GetComponent<Text>().text = judgement;
+        }
     }
 }

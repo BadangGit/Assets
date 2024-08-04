@@ -1,5 +1,6 @@
 using NoteInfo;
 using UnityEngine;
+using UnityEngine.UI;
 using static CreateNoteInfo;
 
 public class DropNotes : MonoBehaviour
@@ -22,6 +23,7 @@ public class DropNotes : MonoBehaviour
         if (pos.y < -540)
         {
             note.Break(gameObject);
+            GameObject.Find("Text").GetComponent<Text>().text = "Miss";
         }
     }
 }
